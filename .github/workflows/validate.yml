@@ -1,0 +1,27 @@
+name: Validate packaging
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y appstream flatpak-builder
+      - name: Check scripts
+        run: |
+          bash -n install.sh scripts/build.sh
+          python3 -m py_compile scripts/upstream_release.py scripts/prepare_release.py
+      - name: Check Flatpak manifest
+        run: flatpak-builder --show-manifest com.ayugram.desktop.yml > /dev/null
+      - name: Check AppStream metadata
+        run: appstreamcli validate --no-net share/metainfo/com.ayugram.desktop.metainfo.xml

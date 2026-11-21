@@ -1,0 +1,36 @@
+app-id: com.ayugram.desktop
+
+runtime: org.gnome.Platform
+runtime-version: '50'
+sdk: org.gnome.Sdk
+command: ayugram-desktop
+
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --device=all
+  - --filesystem=xdg-download
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.gnome.Mutter.IdleMonitor
+  - --talk-name=org.kde.StatusNotifierWatcher
+  - --talk-name=com.canonical.AppMenu.Registrar
+  - --talk-name=com.canonical.indicator.application
+  - --talk-name=org.sigxcpu.Feedback
+
+build-options:
+  strip: true
+
+modules:
+  - name: ayugram
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 AyuGram "$FLATPAK_DEST/bin/ayugram-desktop"
+      - sed -i 's|^Exec=.*|Exec=ayugram-desktop -- %u|' share/applications/com.ayugram.desktop.desktop
+      - sed -i 's|^Exec=.*|Exec=/app/bin/ayugram-desktop|' share/dbus-1/services/com.ayugram.desktop.service
+      - cp -a share "$FLATPAK_DEST/"
+    sources:
+      - type: dir
+        path: .
