@@ -2,32 +2,26 @@
 
 Unofficial Flatpak packaging for [AyuGram Desktop](https://github.com/AyuGram/AyuGramDesktop), built from the upstream stable source tags. GitHub Actions publishes a Flatpak repository to GitHub Pages, so installations receive updates through Flatpak.
 
-## Install or update
+## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Agapenordev/ayugram-flatpak/main/install.sh | bash
+flatpak install --user --from https://agapenordev.github.io/ayugram-flatpak/com.ayugram.desktop.flatpakref
 ```
 
-The same command installs AyuGram or updates an existing per-user installation. It also enables a daily `systemd --user` update timer when systemd is available. Desktop software centers can apply the same Flatpak updates.
+## Update
 
-Every upstream release also creates a versioned [GitHub Release](https://github.com/Agapenordev/ayugram-flatpak/releases) with a standalone `.flatpak` bundle. The bundle is useful for manual installation; use the command above for automatic updates.
+```bash
+flatpak update
+```
+
+Once installed from the repository, AyuGram updates through Flatpak alongside your other Flatpak apps. No custom installer, updater, or systemd timer is used. Desktop software centers can also apply these updates automatically.
+
+Every upstream release creates a versioned [GitHub Release](https://github.com/Agapenordev/ayugram-flatpak/releases) with a standalone `.flatpak` bundle. Use the repository installation above if you want updates through `flatpak update`.
 
 Launch AyuGram with:
 
 ```bash
 flatpak run com.ayugram.desktop
-```
-
-To install without enabling the timer:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/Agapenordev/ayugram-flatpak/main/install.sh | AYUGRAM_AUTO_UPDATE=0 bash
-```
-
-To stop automatic updates:
-
-```bash
-systemctl --user disable --now ayugram-flatpak-update.timer
 ```
 
 ## Publishing setup
@@ -39,7 +33,7 @@ systemctl --user disable --now ayugram-flatpak-update.timer
 
 The build uses AyuGram's documented Telegram API credentials by default. Repository secrets `TDESKTOP_API_ID` and `TDESKTOP_API_HASH` can override them. Builds run on `ubuntu-latest`; set the `BUILD_RUNNER` repository variable to a self-hosted runner label if more disk space or build time is needed.
 
-If you use a different repository name or owner, change the URLs in `install.sh` and this README. CI derives the Pages URL from `GITHUB_REPOSITORY` automatically.
+If you use a different repository name or owner, change the Pages URL in this README. CI derives the published repository URL from `GITHUB_REPOSITORY` automatically.
 
 ## Build locally
 

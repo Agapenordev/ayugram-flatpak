@@ -96,7 +96,7 @@ jobs:
           body: |
             Flatpak build of [AyuGram ${{ needs.resolve.outputs.upstream_tag }}](${{ needs.resolve.outputs.upstream_release_url }}).
 
-            Install the attached `.flatpak` bundle directly, or use the repository installer for automatic updates.
+            Install the attached `.flatpak` bundle directly, or install from the Flatpak repository to receive updates through `flatpak update`.
           files: .build/ayugram-desktop-${{ needs.resolve.outputs.app_version }}.flatpak
           fail_on_unmatched_files: true
           overwrite_files: true
