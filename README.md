@@ -37,7 +37,7 @@ If you use a different repository name or owner, change the Pages URL in this RE
 
 ## Build locally
 
-A source build needs Docker, Git, Python, Poetry, Flatpak, and `flatpak-builder`. It requires substantial disk space and can take several hours.
+A source build needs Docker, Git, Python, Flatpak, and `flatpak-builder`. The build uses Telegram Desktop's prebuilt CentOS environment image.
 
 ```bash
 python3 scripts/upstream_release.py --tag v7.2.9

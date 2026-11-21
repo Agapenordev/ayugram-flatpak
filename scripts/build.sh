@@ -9,7 +9,7 @@ fi
 root_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 cd "$root_dir"
 
-for tool in docker flatpak flatpak-builder git poetry python3; do
+for tool in docker flatpak flatpak-builder git python3; do
     if ! command -v "$tool" >/dev/null 2>&1; then
         echo "Missing required tool: $tool" >&2
         exit 1
@@ -44,17 +44,15 @@ for attempt in 1 2 3; do
     sleep $((attempt * 10))
 done
 
-(
-    cd "$source_dir"
-    ./Telegram/build/prepare/linux.sh
-)
+build_image=ghcr.io/telegramdesktop/tdesktop/centos_env:latest
+docker pull "$build_image"
 
 docker run --rm \
     -u root \
     -e TDESKTOP_API_ID="${TDESKTOP_API_ID:-2040}" \
     -e TDESKTOP_API_HASH="${TDESKTOP_API_HASH:-b18441a1ff607e10a989891a5462e627}" \
     -v "$source_dir:/usr/src/tdesktop" \
-    tdesktop:centos_env \
+    "$build_image" \
     /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
     -D TDESKTOP_API_ID="${TDESKTOP_API_ID:-2040}" \
     -D TDESKTOP_API_HASH="${TDESKTOP_API_HASH:-b18441a1ff607e10a989891a5462e627}"
