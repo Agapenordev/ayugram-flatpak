@@ -65,13 +65,16 @@ jobs:
         run: |
           if command -v apt-get >/dev/null 2>&1; then
             sudo apt-get update
-            sudo apt-get install -y flatpak flatpak-builder poetry
+            sudo apt-get install -y flatpak flatpak-builder pipx
           elif command -v dnf >/dev/null 2>&1; then
-            sudo dnf install -y flatpak flatpak-builder poetry
+            sudo dnf install -y flatpak flatpak-builder pipx
           else
-            echo "Install Docker, Flatpak, flatpak-builder, Git, Python and Poetry on this runner" >&2
+            echo "Install Docker, Flatpak, flatpak-builder, Git, Python and pipx on this runner" >&2
             exit 1
           fi
+          pipx install poetry
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.local/bin:$PATH"
           docker info
       - name: Prepare release metadata
         run: >-

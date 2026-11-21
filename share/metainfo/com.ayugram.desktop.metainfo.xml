@@ -6,14 +6,16 @@
   <name>AyuGram Desktop</name>
   <summary>Desktop version of AyuGram - ToS breaking Telegram client</summary>
   <description>
-    <p>Telegram Desktop with Ghost Mode, Anti-Recall and cool design.</p>
+    <p>AyuGram is a customizable Telegram Desktop client with Ghost Mode, message history, Anti-Recall, and additional privacy controls.</p>
   </description>
   <categories>
     <category>Network</category>
     <category>InstantMessaging</category>
   </categories>
   <update_contact>helpdesk_at_radolyn.com</update_contact>
-  <developer_name>Radolyn Labs</developer_name>
+  <developer id="one.ayugram">
+    <name>Radolyn Labs</name>
+  </developer>
   <url type="homepage">https://ayugram.one/</url>
   <url type="bugtracker">https://t.me/ayugramchat/1262</url>
   <url type="translate">https://crowdin.com/project/ayugram</url>
@@ -35,7 +37,7 @@
     <keyword>ayugram</keyword>
   </keywords>
   <requires>
-    <display_length compare="ge">medium</display_length>
+    <display_length compare="ge">768</display_length>
     <internet>always</internet>
   </requires>
   <supports>
