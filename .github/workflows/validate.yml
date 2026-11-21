@@ -19,7 +19,7 @@ jobs:
           sudo apt-get install -y appstream flatpak-builder
       - name: Check scripts
         run: |
-          bash -n scripts/build.sh
+          bash -n scripts/build.sh scripts/container-build.sh
           python3 -m py_compile scripts/upstream_release.py scripts/prepare_release.py
       - name: Check Flatpak manifest
         run: flatpak-builder --show-manifest com.ayugram.desktop.yml > /dev/null

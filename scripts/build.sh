@@ -52,10 +52,9 @@ docker run --rm \
     -e TDESKTOP_API_ID="${TDESKTOP_API_ID:-2040}" \
     -e TDESKTOP_API_HASH="${TDESKTOP_API_HASH:-b18441a1ff607e10a989891a5462e627}" \
     -v "$source_dir:/usr/src/tdesktop" \
+    -v "$root_dir/scripts/container-build.sh:/usr/local/bin/ayugram-container-build:ro" \
     "$build_image" \
-    /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
-    -D TDESKTOP_API_ID="${TDESKTOP_API_ID:-2040}" \
-    -D TDESKTOP_API_HASH="${TDESKTOP_API_HASH:-b18441a1ff607e10a989891a5462e627}"
+    /usr/local/bin/ayugram-container-build
 
 test -x "$source_dir/out/Release/AyuGram"
 mkdir -p "$package_dir"
