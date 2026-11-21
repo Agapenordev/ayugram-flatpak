@@ -10,6 +10,8 @@ curl -fsSL https://raw.githubusercontent.com/Agapenordev/ayugram-flatpak/main/in
 
 The same command installs AyuGram or updates an existing per-user installation. It also enables a daily `systemd --user` update timer when systemd is available. Desktop software centers can apply the same Flatpak updates.
 
+Every upstream release also creates a versioned [GitHub Release](https://github.com/Agapenordev/ayugram-flatpak/releases) with a standalone `.flatpak` bundle. The bundle is useful for manual installation; use the command above for automatic updates.
+
 Launch AyuGram with:
 
 ```bash
@@ -53,7 +55,7 @@ python3 scripts/prepare_release.py \
 ./scripts/build.sh v7.2.9
 ```
 
-The resulting OSTree repository is in `_site/repo`. The workflow only replaces the published site after a successful build.
+The resulting OSTree repository is in `_site/repo`, and the standalone bundle is in `.build`. The workflow only replaces the published site after a successful build.
 
 ## Packaging notes
 

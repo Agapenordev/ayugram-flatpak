@@ -55,7 +55,7 @@ jobs:
     runs-on: ${{ vars.BUILD_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 360
     permissions:
-      contents: read
+      contents: write
       pages: write
       id-token: write
     environment: github-pages
@@ -88,6 +88,18 @@ jobs:
           TDESKTOP_API_ID: ${{ secrets.TDESKTOP_API_ID }}
           TDESKTOP_API_HASH: ${{ secrets.TDESKTOP_API_HASH }}
         run: ./scripts/build.sh "${{ needs.resolve.outputs.upstream_tag }}"
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.resolve.outputs.app_version }}
+          name: AyuGram ${{ needs.resolve.outputs.app_version }} Flatpak
+          body: |
+            Flatpak build of [AyuGram ${{ needs.resolve.outputs.upstream_tag }}](${{ needs.resolve.outputs.upstream_release_url }}).
+
+            Install the attached `.flatpak` bundle directly, or use the repository installer for automatic updates.
+          files: .build/ayugram-desktop-${{ needs.resolve.outputs.app_version }}.flatpak
+          fail_on_unmatched_files: true
+          overwrite_files: true
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

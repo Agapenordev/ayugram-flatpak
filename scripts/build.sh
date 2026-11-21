@@ -21,8 +21,10 @@ work_dir="$root_dir/.build"
 source_dir="$work_dir/source"
 package_dir="$work_dir/package"
 repo_dir="$root_dir/_site/repo"
+bundle_path="$work_dir/ayugram-desktop-${upstream_tag#v}.flatpak"
 
 rm -rf "$source_dir" "$package_dir" "$work_dir/build-dir"
+rm -f "$bundle_path"
 mkdir -p "$work_dir" "$repo_dir"
 
 git clone --depth 1 --branch "$upstream_tag" \
@@ -68,5 +70,7 @@ flatpak remote-add --user --if-not-exists flathub \
 flatpak install --user --assumeyes --noninteractive flathub org.gnome.Sdk//50
 flatpak-builder --force-clean --disable-rofiles-fuse \
     --repo="$repo_dir" "$work_dir/build-dir" "$package_dir/com.ayugram.desktop.yml"
+flatpak build-bundle "$repo_dir" "$bundle_path" com.ayugram.desktop
 
 echo "Flatpak repository built in $repo_dir"
+echo "Flatpak bundle built at $bundle_path"
