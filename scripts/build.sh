@@ -68,7 +68,7 @@ flatpak install --user --assumeyes --noninteractive flathub \
     org.gnome.Sdk//50 org.gnome.Platform//50
 flatpak-builder --force-clean --disable-rofiles-fuse \
     --repo="$repo_dir" "$work_dir/build-dir" "$package_dir/com.ayugram.desktop.yml"
-flatpak build-bundle "$repo_dir" "$bundle_path" com.ayugram.desktop
+flatpak build-bundle "$repo_dir" "$bundle_path" com.ayugram.desktop stable
 
 echo "Flatpak repository built in $repo_dir"
 echo "Flatpak bundle built at $bundle_path"
