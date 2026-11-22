@@ -10,7 +10,7 @@ on:
       branch:
         description: Flatpak branch to repair
         required: true
-        default: stable
+        default: master
         type: string
 
 permissions:
@@ -34,18 +34,15 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ inputs.source_run_id }}
           github-token: ${{ github.token }}
-      - name: Repair the app ref without rebuilding AyuGram
+      - name: Repair the Flatpak reference without rebuilding AyuGram
         env:
           BRANCH: ${{ inputs.branch }}
         run: |
           mkdir _site
           tar -xf .repair/artifact.tar -C _site
           ref_dir=_site/repo/refs/heads/app/com.ayugram.desktop/x86_64
-          test -f "$ref_dir/master"
-          cp "$ref_dir/master" "$ref_dir/$BRANCH"
-          sudo apt-get update
-          sudo apt-get install -y flatpak
-          flatpak build-update-repo _site/repo
+          test -f "$ref_dir/$BRANCH"
+          sed -i "s/^Branch=.*/Branch=$BRANCH/" _site/com.ayugram.desktop.flatpakref
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

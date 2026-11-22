@@ -42,7 +42,7 @@ def write_site(site_dir: Path, repository: str, version: str) -> None:
     (site_dir / f"{APP_ID}.flatpakref").write_text(
         "[Flatpak Ref]\n"
         f"Name={APP_ID}\n"
-        "Branch=stable\n"
+        "Branch=master\n"
         "Title=AyuGram Desktop\n"
         f"Url={base_url}/repo\n"
         "IsRuntime=false\n"
