@@ -64,7 +64,8 @@ cp -a "$root_dir/share" "$package_dir/"
 
 flatpak remote-add --user --if-not-exists flathub \
     https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install --user --assumeyes --noninteractive flathub org.gnome.Sdk//50
+flatpak install --user --assumeyes --noninteractive flathub \
+    org.gnome.Sdk//50 org.gnome.Platform//50
 flatpak-builder --force-clean --disable-rofiles-fuse \
     --repo="$repo_dir" "$work_dir/build-dir" "$package_dir/com.ayugram.desktop.yml"
 flatpak build-bundle "$repo_dir" "$bundle_path" com.ayugram.desktop
